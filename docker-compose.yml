@@ -1,0 +1,33 @@
+services:
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "3000:3000"
+    depends_on:
+      - catalog
+      - cart
+      - inventory
+      - checkout
+
+  catalog:
+    build: ./catalog-service
+
+  cart:
+    build: ./cart-service
+
+  inventory:
+    build: ./inventory-service
+
+  checkout:
+    build: ./checkout-service
+    depends_on:
+      - catalog
+      - cart
+      - inventory
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - api-gateway

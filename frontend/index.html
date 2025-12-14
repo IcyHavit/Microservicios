@@ -1,0 +1,208 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mini Tienda - Microservicios</title>
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg: #f7fafc;
+      --card: #ffffff;
+      --accent: #0ea5e9;
+      --muted: #6b7280;
+      --radius: 10px;
+    }
+
+    body{
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(180deg,#f8fafc 0%, #ffffff 50%);
+      margin: 0;
+      padding: 24px;
+      color: #0f172a;
+    }
+
+    .main-container{
+      max-width: 980px;
+      margin: 10px auto;
+      padding: 18px;
+    }
+
+    h2{ margin: 0 0 12px; font-weight:600; color:#0f172a; }
+    h3{ margin-top: 22px; color:#0f172a; font-weight:600; }
+
+    .toolbar{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      align-items:center;
+      margin-bottom:12px;
+    }
+
+    #q.search{
+      padding:8px 12px;
+      border-radius:8px;
+      border:1px solid #e6edf2;
+      box-shadow: 0 1px 2px rgba(16,24,40,0.03);
+      min-width: 220px;
+      flex:1;
+    }
+
+    .btn{
+      padding:8px 12px;
+      border-radius:8px;
+      border: none;
+      background: var(--card);
+      cursor:pointer;
+      box-shadow: 0 2px 8px rgba(2,6,23,0.04);
+      color: #0f172a;
+      font-weight:600;
+      transition: transform 0.12s ease, box-shadow 0.12s;
+    }
+
+    .btn:hover{ transform: translateY(-1px); box-shadow: 0 6px 20px rgba(2,6,23,0.06); }
+
+    .btn.primary{
+      background: linear-gradient(90deg,var(--accent), #7dd3fc);
+      color: #fff;
+    }
+
+    .btn.secondary{
+      background: transparent;
+      border: 1px solid #e6edf2;
+      color: var(--accent);
+    }
+
+    #msg{
+      padding:10px;
+      background:#f3f7fb;
+      border-radius:8px;
+      margin-bottom:12px;
+      color:#0f172a;
+      box-shadow: inset 0 -2px 0 rgba(0,0,0,0.02);
+    }
+
+    /* Catalogue grid */
+    #products{
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px,1fr));
+      gap: 16px;
+    }
+
+    /* Generic product card styling so images are same size and layout looks consistent */
+    #products > *{
+      background: var(--card);
+      border-radius: var(--radius);
+      overflow: hidden;
+      display:flex;
+      flex-direction: column;
+      align-items: stretch;
+      box-shadow: 0 6px 16px rgba(2,6,23,0.04);
+      min-height: 320px;
+    }
+
+    /* sets images uniform size */
+    #products img,
+    #products img.product-image {
+      width: 100%;
+      height: 180px;
+      object-fit: cover; /* keeps aspect ratio but crops to fit uniformly */
+      display:block;
+    }
+
+    .product-body{
+      padding: 12px;
+      display:flex;
+      flex-direction: column;
+      gap:8px;
+      flex:1;
+    }
+
+    .product-title{
+      font-weight:600;
+      font-size:16px;
+      margin: 0;
+      color:#0f172a;
+    }
+
+    .product-desc{
+      font-size:13px;
+      color:var(--muted);
+      margin:0;
+      flex:1;
+    }
+
+    .product-footer{
+      display:flex;
+      gap:8px;
+      align-items:center;
+      justify-content:space-between;
+      margin-top:8px;
+    }
+
+    .price{
+      font-weight:700;
+      color: var(--accent);
+      font-size: 16px;
+    }
+
+    .actions{
+      display:flex;
+      gap:8px;
+      align-items:center;
+    }
+
+    /* Cart and inventory styling */
+    #cart, #inventory{
+      display:grid;
+      gap:8px;
+      padding:8px 0;
+    }
+
+    #cart .cart-item, #inventory .inventory-item{
+      background: #fff;
+      border-radius:8px;
+      padding:8px 12px;
+      box-shadow: 0 4px 12px rgba(2,6,23,0.04);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+
+    /* Responsive tweaks */
+    @media (max-width:620px){
+      #products img{ height: 140px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="main-container">
+    <h2>Mini Tienda (Microservicios)</h2>
+
+    <div class="toolbar">
+      <input id="q" class="search" placeholder="buscar..." />
+      <button class="btn" onclick="loadProducts()">Buscar</button>
+      <button class="btn" onclick="loadCart()">Ver carrito</button>
+      <button class="btn" onclick="loadInventory()">Ver inventario</button>
+      <button class="btn primary" onclick="checkout()">Checkout</button>
+      <button class="btn secondary" onclick="clearCart()">Vaciar carrito</button>
+    </div>
+
+    <div id="msg"></div>
+
+    <h3>Catálogo</h3>
+    <div id="products"></div>
+
+    <h3>Carrito</h3>
+    <div id="cart"></div>
+
+    <h3>Inventario</h3>
+    <div id="inventory"></div>
+
+    <script src="app.js"></script>
+  </div>
+</body>
+</html>
