@@ -1,4 +1,4 @@
-const API = "http://localhost:3000";
+const API = "http://18.191.231.95:3000";
 
 function setMsg(t) { document.getElementById("msg").textContent = t; }
 
